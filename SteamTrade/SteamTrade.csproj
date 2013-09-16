@@ -43,6 +43,7 @@
     <Compile Include="Schema.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="SteamWeb.cs" />
+    <Compile Include="TradeOffer.cs" />
     <Compile Include="TradeWebAPI\TradeStatus.cs" />
     <Compile Include="TradeWebAPI\TradeSession.cs" />
     <Compile Include="TradeManager.cs" />
