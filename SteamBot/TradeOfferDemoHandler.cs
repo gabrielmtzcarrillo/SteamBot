@@ -23,25 +23,30 @@ namespace SteamBot
             List<int> contextIds = new List<int>();
             SteamID partner = new SteamID();//<---MUST'T BE EMPTY
 
-            TradeOffer myOffer = new TradeOffer(Bot.SteamClient.SessionID.Value.ToString(),Bot.SteamClient.SessionToken.ToString());
+            TradeOffer myOffer = new TradeOffer(Bot.sessionId, Bot.token);
 
             myOffer.Start(partner);
+            System.IO.File.WriteAllText("response_start.htm", myOffer.response);
 
             contextIds.Add(6);
             mySteamInventory.load(753, contextIds, Bot.SteamClient.SteamID);
 
             foreach (var item in mySteamInventory.items)
             {
-                myOffer.jsonObj.me.assets.Add(new TradeUserAssets(){
+                myOffer.AddItem(new TradeUserAssets(){
                     amount=1,
                     appid = item.Value.appid,
                     contextid = item.Value.contextid,
                     assetid = item.Value.assetid,
                 });
+
+                System.IO.File.WriteAllText("ajax_"+item.Value.assetid+".txt", myOffer.response);
+                Console.WriteLine("RESPONSE:"+myOffer.response);
             }
 
             myOffer.MakeOffer("Test");
-            Console.WriteLine("RESPONSE: "+myOffer.response);
+            System.IO.File.WriteAllText("response_send.htm", myOffer.response);
+            //Console.WriteLine("RESPONSE: "+myOffer.response);
         }
 
         public override void OnChatRoomMessage(SteamID chatID, SteamID sender, string message)

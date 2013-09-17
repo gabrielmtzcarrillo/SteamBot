@@ -35,7 +35,7 @@ namespace SteamTrade
         readonly string steamLogin;
 
         public TradeOfferJson jsonObj;
-
+        public List<TradeUserAssets> itemSlots = new List<TradeUserAssets>();
         public string response;
 
         SteamID partner;
@@ -46,7 +46,8 @@ namespace SteamTrade
             this.steamLogin = steamLogin;
 
             cookies = new CookieContainer();
-            cookies.Add(new Cookie("sessionid", this.sessionId, String.Empty, SteamCommunityDomain));
+
+            cookies.Add(new Cookie("sessionid", Uri.UnescapeDataString(this.sessionId), String.Empty, SteamCommunityDomain));
             cookies.Add(new Cookie("steamLogin", steamLogin, String.Empty, SteamCommunityDomain));
             jsonObj = new TradeOfferJson();
         }
@@ -56,7 +57,7 @@ namespace SteamTrade
             this.partner = partner;
             try
             {
-                response = SteamWeb.Fetch(SteamTradeOfferURL + "?partner=" + this.partner.AccountID, "POST", null, cookies);
+                response = SteamWeb.Fetch(SteamTradeOfferURL + "?partner=" + this.partner.AccountID, "GET", null, cookies);
                 return true;
             }
             catch (Exception e)
@@ -66,10 +67,46 @@ namespace SteamTrade
             }
         }
 
+        public bool AddItem(TradeUserAssets item)
+        {
+            var data = new NameValueCollection();
+            int i = 0;
+            data.Add("sessionid", Uri.UnescapeDataString(this.sessionId));
+            data.Add("appid",""+item.appid);
+            data.Add("contextid",""+item.contextid);
+            data.Add("itemid", "" + item.assetid);
+            
+            foreach (TradeUserAssets offereditem in itemSlots)
+            {
+                i++;
+                if (offereditem.assetid == item.assetid)
+                    break;
+            }
+
+            if (i == 0)
+                i = 1;
+
+            data.Add("slot", ""+i);
+
+            try
+            {
+                response = SteamWeb.Fetch("http://steamcommunity.com/trade/" + partner.ConvertToUInt64() + "/additem/", "POST", data, cookies, true);
+                jsonObj.me.assets.Add(item);
+                jsonObj.version++;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public bool MakeOffer(string message = "")
         {
             var data = new NameValueCollection();
             string json = JsonConvert.SerializeObject(jsonObj);
+            jsonObj.me.ready = true;
 
             data.Add("sessionid",Uri.UnescapeDataString(this.sessionId));
             data.Add("partner",partner.ConvertToUInt64().ToString());

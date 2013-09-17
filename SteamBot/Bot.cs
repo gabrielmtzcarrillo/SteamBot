@@ -72,8 +72,8 @@ namespace SteamBot
         // The number, in milliseconds, between polls for the trade.
         int TradePollingInterval;
 
-        string sessionId;
-        string token;
+        public string sessionId;
+        public string token;
         bool isprocess;
         public bool IsRunning = false;
 
