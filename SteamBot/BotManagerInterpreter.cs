@@ -45,11 +45,12 @@ namespace SteamBot
 
         void AuthSet(string auth)
         {
+            int index = -1;
             string[] xy = auth.Split('=');
 
             if (xy.Length == 2)
             {
-                int index;
+                
                 string code = xy[1].Trim();
 
                 if (int.TryParse(xy[0], out index) && (index < manager.ConfigObject.Bots.Length))
@@ -80,6 +81,7 @@ namespace SteamBot
             showHelp = false;
             start = null;
             stop = null;
+            int index = -1;
 
             p.Parse(command);
 
@@ -91,7 +93,6 @@ namespace SteamBot
 
             if (!String.IsNullOrEmpty(stop))
             {
-                int index;
                 if (int.TryParse(stop, out index) && (index < manager.ConfigObject.Bots.Length))
                 {
                     manager.StopBot(index);
@@ -104,7 +105,6 @@ namespace SteamBot
 
             if (!String.IsNullOrEmpty(start))
             {
-                int index;
                 if (int.TryParse(start, out index) && (index < manager.ConfigObject.Bots.Length))
                 {
                     manager.StartBot(index);
@@ -173,7 +173,7 @@ namespace SteamBot
             // Take the rest of the input as is
             var command = cmd.Remove(0, cs[0].Length + 1);
 
-            int index;
+            int index = -1;
             // Try index first then search usernames
             if (int.TryParse(cs[0], out index) && (index < manager.ConfigObject.Bots.Length))
             {

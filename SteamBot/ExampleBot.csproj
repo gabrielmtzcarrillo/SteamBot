@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E81DED36-EDF5-41A5-8666-A3A0C581762F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SteamBot</RootNamespace>
+    <RootNamespace>Steam</RootNamespace>
     <AssemblyName>SteamBot</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -33,17 +33,17 @@
     <Externalconsole>True</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="SteamKit2, Version=1.5.0.29553, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SteamKit2, Version=1.5.1.41089, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SteamKit2.1.5.0\lib\net40\SteamKit2.dll</HintPath>
+      <HintPath>..\packages\SteamKit2.1.5.1\lib\net40\SteamKit2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -63,36 +63,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SteamGroups\CMsgInviteUserToGroup.cs" />
-    <Compile Include="SteamTradeDemoHandler.cs" />
-    <Compile Include="TF2GC\Crafting.cs" />
-    <Compile Include="TF2GC\Items.cs" />
-    <Compile Include="TF2GC\MsgCraft.cs" />
-    <Compile Include="SteamGroups\CMsgGroupInviteAction.cs" />
-    <Compile Include="SteamGuardRequiredEventArgs.cs" />
-    <Compile Include="Bot.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="AdminUserHandler.cs" />
     <Compile Include="BotManager.cs" />
     <Compile Include="BotManagerInterpreter.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="3rdparty\Options.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="TF2GC\MsgDelete.cs" />
-    <Compile Include="UserHandler.cs" />
     <Compile Include="SimpleUserHandler.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\SteamTrade\SteamTrade.csproj">
-      <Project>{6CEC0333-81EB-40EE-85D1-941363626FC7}</Project>
-      <Name>SteamTrade</Name>
+    <ProjectReference Include="..\SteamClient\Steam.csproj">
+      <Project>{3F28E396-FD1F-4E97-ADE7-715489C27C29}</Project>
+      <Name>Steam</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

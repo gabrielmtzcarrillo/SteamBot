@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using SteamKit2;
+using Steam;
 
 namespace SteamBot
 {
